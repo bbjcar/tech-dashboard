@@ -1,0 +1,20 @@
+<!DOCTYPE html><html lang="ko" dir="ltr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>기술 대시보드 · bbjcar</title><style>
+:root{--bg:#f6f8fc;--fg:#14213d;--muted:#5b6475;--accent:#1f4e9c;--line:#e3e7ef;--card:#ffffff;--tag:#e8eefb;--tag-fg:#1d4a91;--hero1:#1f4e9c;--hero2:#2f6fd6}
+@media (prefers-color-scheme: dark){:root{--bg:#0e1525;--fg:#e8ecf4;--muted:#a3acbd;--accent:#7fb0ff;--line:#263149;--card:#151f33;--tag:#1b2c4d;--tag-fg:#9cc0ff;--hero1:#16305e;--hero2:#1f4e9c}}
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font-family:"Pretendard","Segoe UI","Malgun Gothic",-apple-system,sans-serif;line-height:1.6;text-align:start}
+.hero{background:linear-gradient(135deg,var(--hero1),var(--hero2));color:#fff;padding-block:2.5rem;padding-inline:1.25rem}
+.wrap{max-width:68rem;margin-inline:auto}
+.hero h1{margin:0;font-size:2rem}.hero p{margin-block:.4rem 0;opacity:.9}
+main{padding-block:1.75rem;padding-inline:1.25rem}
+h2{font-size:1.15rem;margin-block:1.5rem .75rem;color:var(--muted);font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(18rem,1fr));gap:1rem}
+a.card{display:flex;flex-direction:column;gap:.4rem;background:var(--card);border:1px solid var(--line);border-radius:.85rem;padding:1.1rem 1.2rem;text-decoration:none;color:var(--fg);transition:transform .15s,box-shadow .15s}
+a.card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(20,33,61,.12);border-color:var(--accent)}
+.kind{font-size:.75rem;font-weight:700;color:var(--accent);letter-spacing:.02em}
+.card h3{margin:0;font-size:1.05rem;line-height:1.35}
+.card p{margin:0;font-size:.9rem;color:var(--muted)}
+.meta{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center;margin-block-start:auto;padding-block-start:.4rem;font-size:.78rem;color:var(--muted)}
+.tag{background:var(--tag);color:var(--tag-fg);border-radius:999px;padding-block:.05rem;padding-inline:.5rem;font-weight:600}
+footer{max-width:68rem;margin-inline:auto;padding:1.5rem 1.25rem 2.5rem;font-size:.82rem;color:var(--muted)}
+</style></head><body><header class="hero"><div class="wrap"><h1>기술 대시보드</h1><p>Microsoft 365 · Power Platform · Copilot · Azure AI 관련 정보 공유와 기술 기록</p></div></header><main class="wrap"><h2>정보 공유</h2><div class="grid"><a class="card" href="ignite-2026/"><span class="kind">정보 공유</span><h3>Microsoft Ignite 2026 결과 정리</h3><p>GA·프리뷰·예정 상태로 본 Copilot, Copilot Studio, Foundry, Agent 365, 보안 발표 정리와 12월~2027 일정.</p><div class="meta"><span>2026-11-23</span><span class="tag">Ignite</span><span class="tag">Copilot</span><span class="tag">Foundry</span><span class="tag">Agent 365</span></div></a></div><h2>기술노트 (장애 해결 · 구현)</h2><div class="grid"><a class="card" href="https://bbjcar.github.io/tech-notes/"><span class="kind">기술노트</span><h3>장애 해결 · 기술 구현 기록</h3><p>프로젝트에서 겪은 문제와 해결 과정, 구현 방법을 검색 가능한 문서 사이트로 모았습니다.</p><div class="meta"><span>상시</span><span class="tag">MkDocs</span><span class="tag">Troubleshooting</span></div></a><a class="card" href="https://bbjcar.github.io/tech-notes/implementation/cmr-git-deploy/"><span class="kind">기술노트</span><h3>Managed Apps(CMR) 배포 흐름과 Git의 역할</h3><p>로컬 개발 → Git push → 플랫폼 빌드 → preview/live URL까지, 빌드 결과물의 의미.</p><div class="meta"><span>2026-11</span><span class="tag">CMR</span><span class="tag">Managed Apps</span></div></a><a class="card" href="https://bbjcar.github.io/tech-notes/implementation/copilot-harness-upgrade/"><span class="kind">기술노트</span><h3>Standard → Copilot harness 업그레이드</h3><p>Copilot Studio 업그레이드 기능 사용법, 옮겨지지 않는 항목, 과금 차이와 비교 테스트 방법.</p><div class="meta"><span>2026-11</span><span class="tag">Copilot Studio</span><span class="tag">Harness</span></div></a></div></main><footer>공개 자료 기반으로 정리한 개인 학습·공유 페이지입니다. 고객사·내부 정보는 포함하지 않습니다.</footer></body></html>
