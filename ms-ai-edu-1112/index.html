@@ -25,7 +25,6 @@ td pre{margin:.1rem 0}
 ul.tight{margin:.3rem 0;padding-inline-start:1.2rem}
 .qa{border:1px solid var(--line);border-radius:.75rem;padding:.9rem 1.1rem;margin-block:.8rem;background:var(--card)}
 .qa .q{font-weight:700}
-.qa .tag{display:inline-block;font-size:.75rem;font-weight:700;padding:.05rem .5rem;border-radius:999px;margin-inline-end:.4rem;background:var(--warn-bg);border:1px solid var(--warn-line)}
 .note{background:var(--warn-bg);border-inline-start:4px solid var(--warn-line);padding:.75rem 1rem;border-radius:.5rem;font-size:.92rem}
 ol.src{font-size:.88rem;padding-inline-start:1.3rem}
 footer{margin-block-start:2rem;font-size:.85rem;color:var(--muted);border-block-start:1px solid var(--line);padding-block-start:.75rem}
@@ -156,9 +155,7 @@ Azure           Azure</pre>ExpressRoute는 <b>빠르고, 안정적이고, 보안
 </tbody></table>
 
 <h2>4. Q&amp;A</h2>
-<div class="qa"><p class="q">Q1. Managed Apps(현 Copilot Managed Runtime)는 MS가 미리 만든 커넥터만 쓸 수 있는 것으로 아는데, 사용자 지정 커넥터나 REST API를 쓸 수 있게 하는 계획이 있나?</p><p><span class="tag">답변 미기록</span>교육 노트에는 답변이 남아 있지 않습니다.</p><p class="muted">참고(이후 공개 문서로 확인한 내용): npm 라이브러리는 앱에 번들해서 쓸 수 있습니다. 기본 보안 정책(CSP)이 외부 CDN·외부 호출을 막고 허용 커넥터도 1st-party 일부로 제한되지만, 관리자가 허용 범위를 넓힐 수 있습니다. CMR은 Ignite 2026에서 GA되었습니다.</p></div>
-<div class="qa"><p class="q">Q2. Agent Builder의 <b>Agent Add</b> 기능은 Power Platform(Copilot Studio)의 A2A와 같은 것인가? 서드파티 에이전트와 연결되나?</p><p><span class="tag">답변 미기록</span>교육 노트에는 답변이 남아 있지 않습니다. 확인되는 대로 갱신 예정입니다.</p><p class="muted">참고: Copilot Studio의 연결된 에이전트는 A2A 에이전트 연결을 프리뷰로 지원합니다(Agent Builder와는 별개 기능).</p></div>
-<div class="qa"><p class="q">Q3. Autopilot은 클라우드 영역만 담당해서 로컬 PC에서는 에이전트를 쓸 수 없다. 로컬 PC 쪽은 어떤 서비스가 맡나?</p><p><b>A.</b> Windows의 <b>Hybrid Intelligence (Cloud + Local AI)</b>가 그 역할을 맡는 방향입니다. Scout(현 Autopilot)는 클라우드 에이전트로 정리되고, PC 관련 기능은 Hybrid Intelligence 쪽에서 이어집니다. 기술적 핵심 주제는 <b>“OS 수준 격리”</b>와 <b>“로컬에서의 AI”</b>입니다. 자세한 내용은 아래 5장을 참고하세요.</p></div>
+<div class="qa"><p class="q">Q. Autopilot은 클라우드 영역만 담당해서 로컬 PC에서는 에이전트를 쓸 수 없다. 로컬 PC 쪽은 어떤 서비스가 맡나?</p><p><b>A.</b> Windows의 <b>Hybrid Intelligence (Cloud + Local AI)</b>가 그 역할을 맡는 방향입니다. Scout(현 Autopilot)는 클라우드 에이전트로 정리되고, PC 관련 기능은 Hybrid Intelligence 쪽에서 이어집니다. 기술적 핵심 주제는 <b>“OS 수준 격리”</b>와 <b>“로컬에서의 AI”</b>입니다. 자세한 내용은 아래 5장을 참고하세요.</p></div>
 
 <h2>5. Windows Hybrid Intelligence = Cloud + Local AI</h2>
 <table><thead><tr><th>주제</th><th>내용</th></tr></thead><tbody>
