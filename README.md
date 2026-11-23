@@ -11,6 +11,7 @@
 |---|---|
 | `index.html` | 대시보드 첫 화면(카드 목록) |
 | `ignite-2026/index.html` | Microsoft Ignite 2026 결과 정리 |
+| `ms-ai-edu-1112/index.html` | MS AI 교육(11.12) 정리: Azure Landing Zone 용어 · Q&A · Hybrid Intelligence |
 
 ## 새 글 추가하기
 

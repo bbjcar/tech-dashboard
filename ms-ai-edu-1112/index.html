@@ -1,0 +1,183 @@
+<!DOCTYPE html><html lang="ko" dir="ltr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>MS AI 교육 정리 (2026-11-12)</title><style>
+:root{--bg:#ffffff;--fg:#14213d;--muted:#5b6475;--accent:#1f4e9c;--line:#e3e7ef;--card:#f6f8fc;--code:#eef2f9;--star:#d99a00;--warn-bg:#fff6e5;--warn-line:#f0b44c}
+@media (prefers-color-scheme: dark){:root{--bg:#0e1525;--fg:#e8ecf4;--muted:#a3acbd;--accent:#7fb0ff;--line:#263149;--card:#151f33;--code:#1a2540;--star:#ffcb4d;--warn-bg:#33270f;--warn-line:#b7852f}}
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font-family:"Pretendard","Segoe UI","Malgun Gothic",-apple-system,sans-serif;line-height:1.6;text-align:start}
+.page{max-width:68rem;margin-inline:auto;padding-block:2rem;padding-inline:1.25rem}
+h1{font-size:1.9rem;margin-block:0 .25rem;line-height:1.25}
+h2{font-size:1.3rem;margin-block:2.25rem .75rem;padding-block-end:.35rem;border-block-end:2px solid var(--accent)}
+h3{font-size:1.05rem;margin-block:1.5rem .5rem;color:var(--accent)}
+.muted{color:var(--muted)}a{color:var(--accent)}
+.summary{background:var(--card);border-inline-start:4px solid var(--accent);padding:.9rem 1.1rem;border-radius:.5rem;font-size:1.02rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(12.5rem,1fr));gap:.8rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:.75rem;padding:.9rem 1rem}
+.card h4{margin:0 0 .2rem;font-size:1.05rem}
+.card p{margin:.2rem 0 0;font-size:.9rem;color:var(--muted)}
+.star{color:var(--star);font-size:.85rem;letter-spacing:.05em}
+pre{background:var(--code);border-radius:.5rem;padding:.6rem .8rem;margin:.3rem 0;font-size:.85rem;line-height:1.45;overflow-x:auto;font-family:Consolas,"D2Coding",monospace;white-space:pre}
+.diag{display:grid;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));gap:.8rem}
+.diag .card h4{font-size:.95rem;color:var(--accent)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{text-align:start;vertical-align:top;padding:.5rem .65rem;border-block-end:1px solid var(--line)}
+th{color:var(--muted);font-weight:600;background:var(--card)}
+td.nm{width:12rem;font-weight:600}td.no{width:2.5rem;color:var(--muted)}
+td pre{margin:.1rem 0}
+ul.tight{margin:.3rem 0;padding-inline-start:1.2rem}
+.qa{border:1px solid var(--line);border-radius:.75rem;padding:.9rem 1.1rem;margin-block:.8rem;background:var(--card)}
+.qa .q{font-weight:700}
+.qa .tag{display:inline-block;font-size:.75rem;font-weight:700;padding:.05rem .5rem;border-radius:999px;margin-inline-end:.4rem;background:var(--warn-bg);border:1px solid var(--warn-line)}
+.note{background:var(--warn-bg);border-inline-start:4px solid var(--warn-line);padding:.75rem 1rem;border-radius:.5rem;font-size:.92rem}
+ol.src{font-size:.88rem;padding-inline-start:1.3rem}
+footer{margin-block-start:2rem;font-size:.85rem;color:var(--muted);border-block-start:1px solid var(--line);padding-block-start:.75rem}
+@media print{:root{--bg:#fff;--fg:#000;--muted:#444;--card:#fff;--line:#999;--code:#f3f3f3}.card,tr,.qa{break-inside:avoid}@page{margin:15mm}}
+</style></head><body><main class="page">
+<header><p class="muted"><a href="../">← 기술 대시보드</a> · 2026-11-12 교육</p><h1>MS AI 교육 정리 — Azure Landing Zone 용어 · Q&amp;A · Windows Hybrid Intelligence</h1><p class="muted">교육 노트를 공개 자료 기준으로 다시 정리했습니다. 처음 Azure 인프라를 접하는 사람도 읽을 수 있게 비유와 예시를 함께 담았습니다.</p></header>
+
+<h2>1. 한 문장 요약</h2>
+<p class="summary">“온프레미스와 Azure를 <b>ExpressRoute</b>로 연결하고, <b>Hub</b>에서 <b>Firewall/UTM</b>으로 보안을 통합 관리하며, 각 업무시스템은 <b>Spoke VNet</b>에 배치하고 웹서비스는 <b>Application Gateway WAF</b>로 보호하자.”</p>
+
+<h3>반드시 기억할 핵심 키워드 5개</h3>
+<div class="grid">
+<div class="card"><h4>Landing Zone</h4><div class="star">★★★★★</div><p>Azure 표준 구축 방법론</p></div>
+<div class="card"><h4>Hub-Spoke</h4><div class="star">★★★★★</div><p>중앙집중형 네트워크 구조</p></div>
+<div class="card"><h4>ExpressRoute</h4><div class="star">★★★★★</div><p>회사 ↔ Azure 전용선</p></div>
+<div class="card"><h4>Firewall / UTM</h4><div class="star">★★★★★</div><p>네트워크 보안 통제</p></div>
+<div class="card"><h4>WAF</h4><div class="star">★★★★★</div><p>웹 공격 방어</p></div>
+</div>
+
+<h2>2. 전체 구조 한눈에 보기</h2>
+<div class="diag">
+<div class="card"><h4>① 회사 → Azure 연결</h4><pre>회사
+ ↓ ExpressRoute (전용회선)
+ExpressRoute Gateway
+ ↓
+Azure</pre></div>
+<div class="card"><h4>② Hub: 공통 서비스</h4><pre>Hub
+ ├─ Firewall (Azure Firewall/UTM)
+ ├─ ExpressRoute Gateway
+ ├─ DNS
+ └─ Logging</pre></div>
+<div class="card"><h4>③ Spoke: 업무 시스템</h4><pre>Hub
+ ├─ ERP   (Spoke VNet)
+ ├─ MES   (Spoke VNet)
+ ├─ SCM   (Spoke VNet)
+ └─ RPA   (Spoke VNet)</pre></div>
+<div class="card"><h4>④ 웹 서비스 보호</h4><pre>사용자 (인터넷)
+ ↓ HTTPS
+Application Gateway + WAF
+ ↓
+Web Server</pre></div>
+</div>
+
+<h2>3. Azure Landing Zone 핵심 용어집 (27개)</h2>
+
+<h3>기본 개념</h3>
+<table><thead><tr><th>#</th><th>용어</th><th>한 줄 설명</th><th>쉽게 말하면 / 예시</th></tr></thead><tbody>
+<tr><td class="no">1</td><td class="nm">Landing Zone</td><td>Azure를 기업 환경에서 표준화해서 쓰기 위한 기본 설계도</td><td>집을 짓기 전에 도로를 만들고 전기·수도를 연결하고 보안시설을 설치하는 것과 비슷합니다. Azure에서는 <b>네트워크·보안·계정·정책·로그</b>를 미리 설계해 두는 환경입니다.</td></tr>
+<tr><td class="no">2</td><td class="nm">Workload</td><td>업무 시스템 하나</td><td>ERP, MES, 그룹웨어, RPA, 홈페이지 등. 즉 <b>회사 업무 시스템 = Workload</b></td></tr>
+</tbody></table>
+
+<h3>네트워크</h3>
+<table><thead><tr><th>#</th><th>용어</th><th>한 줄 설명</th><th>쉽게 말하면 / 예시</th></tr></thead><tbody>
+<tr><td class="no">3</td><td class="nm">VNet (Virtual Network)</td><td>Azure 안의 사설 네트워크</td><td>회사 내부망 = Azure VNet<pre>VNet
+ ├─ Web
+ ├─ App
+ └─ DB</pre></td></tr>
+<tr><td class="no">4</td><td class="nm">Subnet</td><td>VNet 내부를 나눈 영역</td><td>본사 건물을 영업부·개발부·회의실로 나누는 것처럼<pre>VNet
+ ├─ AG Subnet
+ ├─ VM Subnet
+ └─ DB Subnet</pre></td></tr>
+<tr><td class="no">5</td><td class="nm">Hub</td><td>공통 서비스를 모아두는 중앙 네트워크</td><td>보통 Firewall, ExpressRoute, DNS, Logging을 배치</td></tr>
+<tr><td class="no">6</td><td class="nm">Spoke</td><td>실제 업무 시스템이 들어가는 네트워크</td><td>각 업무망(ERP, MES, SCM, RPA) = Spoke</td></tr>
+<tr><td class="no">7</td><td class="nm">Hub-Spoke</td><td>중앙 집중형 네트워크 구조</td><td>장점: 보안 관리가 쉬움 · 운영 비용 절감 · 정책 통일 가능</td></tr>
+</tbody></table>
+
+<h3>온프레미스 연결</h3>
+<table><thead><tr><th>#</th><th>용어</th><th>한 줄 설명</th><th>쉽게 말하면 / 예시</th></tr></thead><tbody>
+<tr><td class="no">8</td><td class="nm">ExpressRoute</td><td>회사 ↔ Azure 전용선</td><td><pre>일반 연결       ExpressRoute
+회사            회사
+ ↓ 인터넷        ↓ 전용회선
+Azure           Azure</pre>ExpressRoute는 <b>빠르고, 안정적이고, 보안성이 높음</b></td></tr>
+<tr><td class="no">9</td><td class="nm">ExpressRoute Gateway</td><td>Azure에서 ExpressRoute를 받는 관문</td><td>회사 → ExpressRoute → Gateway → Azure</td></tr>
+</tbody></table>
+
+<h3>보안</h3>
+<table><thead><tr><th>#</th><th>용어</th><th>한 줄 설명</th><th>쉽게 말하면 / 예시</th></tr></thead><tbody>
+<tr><td class="no">10</td><td class="nm">Firewall</td><td>네트워크 출입 통제 장비</td><td>건물 경비실 같은 존재<pre>443 허용
+80 차단
+1234 차단</pre></td></tr>
+<tr><td class="no">11</td><td class="nm">UTM</td><td>여러 보안 기능이 들어 있는 통합 보안장비</td><td>포함 기능: Firewall, IPS, URL Filtering, Malware Detection<br>대표 제품: Fortigate, Palo Alto, Check Point</td></tr>
+<tr><td class="no">12</td><td class="nm">IPS</td><td>침입 탐지 및 차단</td><td>악성 공격 발견 → 자동 차단</td></tr>
+<tr><td class="no">13</td><td class="nm">URL Filtering</td><td>특정 사이트 접속 차단</td><td>예: facebook.com 차단, torrent 사이트 차단</td></tr>
+</tbody></table>
+
+<h3>웹 보안</h3>
+<table><thead><tr><th>#</th><th>용어</th><th>한 줄 설명</th><th>쉽게 말하면 / 예시</th></tr></thead><tbody>
+<tr><td class="no">14</td><td class="nm">Application Gateway</td><td>Azure 웹 로드밸런서</td><td>역할: HTTPS 처리 · 부하분산 · URL Routing<br>사용자 → Application Gateway → Web Server</td></tr>
+<tr><td class="no">15</td><td class="nm">WAF</td><td>웹 공격 전용 방화벽</td><td>막아주는 공격: SQL Injection, XSS, OWASP Top 10<br>인터넷 → WAF → 웹서버</td></tr>
+<tr><td class="no">16</td><td class="nm">SSL Offload</td><td>HTTPS 암호화 처리를 서버 대신 Gateway가 수행</td><td><pre>기존              Offload
+사용자            사용자
+ ↓ HTTPS           ↓ HTTPS
+웹서버            Gateway
+                   ↓ HTTP
+                  웹서버</pre>효과: 서버 부하 감소</td></tr>
+<tr><td class="no">17</td><td class="nm">HTTPS Redirect</td><td>HTTP 접속을 HTTPS로 자동 변경</td><td>http://company.com → https://company.com</td></tr>
+</tbody></table>
+
+<h3>Azure 보안</h3>
+<table><thead><tr><th>#</th><th>용어</th><th>한 줄 설명</th><th>쉽게 말하면 / 예시</th></tr></thead><tbody>
+<tr><td class="no">18</td><td class="nm">NSG</td><td>Azure의 네트워크 방화벽 (Subnet 또는 VM에 적용)</td><td><pre>443 허용
+3389 차단 (원격 데스크톱)
+22 차단 (SSH)</pre></td></tr>
+<tr><td class="no">19</td><td class="nm">Azure Firewall</td><td>Microsoft가 제공하는 클라우드 방화벽</td><td>중앙 방화벽, 네트워크 제어. Landing Zone에서는 보통 <b>Hub └─ Azure Firewall</b> 형태</td></tr>
+</tbody></table>
+
+<h3>인증 · DNS</h3>
+<table><thead><tr><th>#</th><th>용어</th><th>한 줄 설명</th><th>쉽게 말하면 / 예시</th></tr></thead><tbody>
+<tr><td class="no">20</td><td class="nm">AAD → Microsoft Entra ID</td><td>Azure 계정 관리 시스템</td><td>과거 명칭 Azure AD, 현재 Microsoft Entra ID<br>사용자 → Entra ID 로그인 → Azure 접근</td></tr>
+<tr><td class="no">21</td><td class="nm">DNS</td><td>이름을 IP로 바꾸는 전화번호부</td><td>www.naver.com → 223.xxx.xxx.xxx</td></tr>
+<tr><td class="no">22</td><td class="nm">Private DNS</td><td>회사 내부용 DNS</td><td>외부에서는 접근 불가</td></tr>
+</tbody></table>
+
+<h3>운영 · 모니터링</h3>
+<table><thead><tr><th>#</th><th>용어</th><th>한 줄 설명</th><th>쉽게 말하면 / 예시</th></tr></thead><tbody>
+<tr><td class="no">23</td><td class="nm">Log Analytics</td><td>Azure 로그 저장소</td><td>저장 대상: WAF, VM, Azure Activity</td></tr>
+<tr><td class="no">24</td><td class="nm">Microsoft Sentinel</td><td>Azure SIEM (보안 관제 시스템)</td><td>보안 로그 수집 · 이상징후 탐지 · 공격 분석</td></tr>
+<tr><td class="no">25</td><td class="nm">Defender for Cloud</td><td>Azure 보안 점검 서비스</td><td>VM에 공인 IP 존재 → 경고 / 포트 개방 → 경고</td></tr>
+</tbody></table>
+
+<h3>고가용성</h3>
+<table><thead><tr><th>#</th><th>용어</th><th>한 줄 설명</th><th>쉽게 말하면 / 예시</th></tr></thead><tbody>
+<tr><td class="no">26</td><td class="nm">Availability Zone</td><td>같은 지역 안의 서로 다른 데이터센터</td><td>한 Zone에 장애가 나도 서비스 계속 운영</td></tr>
+<tr><td class="no">27</td><td class="nm">Multi-Zone</td><td>서비스를 여러 Zone에 배치</td><td><pre>App Server
+ ├─ Zone 1
+ ├─ Zone 2
+ └─ Zone 3</pre></td></tr>
+</tbody></table>
+
+<h2>4. Q&amp;A</h2>
+<div class="qa"><p class="q">Q1. Managed Apps(현 Copilot Managed Runtime)는 MS가 미리 만든 커넥터만 쓸 수 있는 것으로 아는데, 사용자 지정 커넥터나 REST API를 쓸 수 있게 하는 계획이 있나?</p><p><span class="tag">답변 미기록</span>교육 노트에는 답변이 남아 있지 않습니다.</p><p class="muted">참고(이후 공개 문서로 확인한 내용): npm 라이브러리는 앱에 번들해서 쓸 수 있습니다. 기본 보안 정책(CSP)이 외부 CDN·외부 호출을 막고 허용 커넥터도 1st-party 일부로 제한되지만, 관리자가 허용 범위를 넓힐 수 있습니다. CMR은 Ignite 2026에서 GA되었습니다.</p></div>
+<div class="qa"><p class="q">Q2. Agent Builder의 <b>Agent Add</b> 기능은 Power Platform(Copilot Studio)의 A2A와 같은 것인가? 서드파티 에이전트와 연결되나?</p><p><span class="tag">답변 미기록</span>교육 노트에는 답변이 남아 있지 않습니다. 확인되는 대로 갱신 예정입니다.</p><p class="muted">참고: Copilot Studio의 연결된 에이전트는 A2A 에이전트 연결을 프리뷰로 지원합니다(Agent Builder와는 별개 기능).</p></div>
+<div class="qa"><p class="q">Q3. Autopilot은 클라우드 영역만 담당해서 로컬 PC에서는 에이전트를 쓸 수 없다. 로컬 PC 쪽은 어떤 서비스가 맡나?</p><p><b>A.</b> Windows의 <b>Hybrid Intelligence (Cloud + Local AI)</b>가 그 역할을 맡는 방향입니다. Scout(현 Autopilot)는 클라우드 에이전트로 정리되고, PC 관련 기능은 Hybrid Intelligence 쪽에서 이어집니다. 기술적 핵심 주제는 <b>“OS 수준 격리”</b>와 <b>“로컬에서의 AI”</b>입니다. 자세한 내용은 아래 5장을 참고하세요.</p></div>
+
+<h2>5. Windows Hybrid Intelligence = Cloud + Local AI</h2>
+<table><thead><tr><th>주제</th><th>내용</th></tr></thead><tbody>
+<tr><td class="nm">무엇이 바뀌나</td><td><ul class="tight"><li>Copilot이 PC의 파일과 최근 활동에 접근하고, 파일 이동·설정 변경 같은 작업을 직접 수행</li><li>작업 성격에 따라 <b>PC의 로컬 AI 모델</b>과 <b>Cloud AI</b> 중에서 선택. 비용이나 개인정보 보호가 중요하면 로컬 모델, 어려운 작업은 Cloud</li><li>Copilot이 ‘도우미(Assistant)’에서 실제로 일하는 ‘에이전트(Agent)’로 진화</li></ul></td></tr>
+<tr><td class="nm">발표 시연 예시</td><td>에이전트가 이메일을 찾고 → 여러 위치의 세금 문서를 찾아 → 이름을 바꾸고 → 폴더에 정리하고 → ZIP으로 묶고 → 답장까지 준비</td></tr>
+<tr><td class="nm">Local AI의 의미</td><td><b>Privacy + Cost.</b> 세금 문서 분류를 PC의 로컬 모델에서 처리해 세부 정보를 Cloud로 보내지 않음. 로컬 모델은 PC에서 추가 비용 없이 작업 수행</td></tr>
+<tr><td class="nm">보안: Execution Containers (MXC)</td><td><ul class="tight"><li>PC 에이전트가 넓은 시스템 권한을 갖는 것 자체가 보안 문제 → <b>Microsoft Execution Containers</b>로 에이전트가 접근할 수 있는 파일과 네트워크 범위를 제한</li><li>MXC: 신뢰할 수 없는 코드나 동적으로 생성된 작업을 위한 <b>정책 기반 실행 계층</b></li><li>방향: 기본 거부 권한(default-deny), 에이전트별 ID(per-agent identity), OS 수준 격리</li><li>OpenAI Codex와 OpenClaw가 지원 중, Claude Code와 Perplexity도 지원 예정으로 소개됨</li></ul></td></tr>
+<tr><td class="nm">하드웨어: NVIDIA 협력</td><td>‘PC = Personal AI Compute’로 확장. NVIDIA RTX Spark 기반 Windows PC에서 대형 AI 모델을 로컬로 실행하는 방향. Surface Laptop Ultra, Surface RTX Spark Dev Box와 Asus·Dell·HP·Lenovo·MSI 시스템이 소개됨. 하드웨어를 넘어 AI 소프트웨어까지 함께 설계하는 full-stack 파트너십</td></tr>
+</tbody></table>
+<p class="note"><b>Ignite 2026 후속:</b> MXC에 새 격리 기능이 추가됐고, Windows 365 for Agents가 Copilot Credits 과금 대상이 됐습니다. 자세한 내용은 대시보드의 <a href="../ignite-2026/">Ignite 2026 결과 정리</a>를 참고하세요.</p>
+
+<h2>6. 참고 자료</h2>
+<ol class="src">
+<li><a href="https://www.youtube.com/watch?v=ilmBGeGldrI">Something new is coming from Windows | October 7 (발표 영상)</a></li>
+<li><a href="https://blogs.windows.com/windowsexperience/2026/10/07/building-windows-for-hybrid-intelligence/">Building Windows for hybrid intelligence — Windows Experience Blog</a></li>
+<li><a href="https://blogs.windows.com/windowsdeveloper/2026/10/07/microsoft-execution-containers-policy-driven-containment-for-ai-agents/">Microsoft Execution Containers: Policy-driven containment for AI agents — Windows Developer Blog</a></li>
+<li><a href="https://github.com/microsoft/mxc/tree/main">microsoft/mxc: Policy-driven, layered isolation and containment (GitHub)</a></li>
+<li><a href="https://blogs.windows.com/windowsdeveloper/2026/06/02/build-2026-furthering-windows-as-the-trusted-platform-for-development/">Build 2026: Furthering Windows as the trusted platform for development — Windows Developer Blog</a></li>
+<li><a href="https://www.geekwire.com/2026/microsoft-plays-the-windows-card-in-the-ai-game-with-help-from-nvidia/">Microsoft plays the Windows card in the AI game with help from NVIDIA — GeekWire</a></li>
+</ol>
+<footer>교육 노트를 바탕으로 공개 자료 위주로 정리한 개인 학습 페이지입니다.</footer>
+</main></body></html>
