@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+<head>
+<meta charset="utf-8"><meta name="MSRAI_Label_dbd012e0-e600-4c3e-83b7-7d3141c15efc_AI_Disclosure" content="Made with AI">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Power Automate 라이선스 가이드 – PAD vs 클라우드 흐름</title>
+<style>
+:root{
+  --bg:#f5f7fb; --card:#ffffff; --ink:#1b2430; --muted:#5b6675; --line:#dde3ec;
+  --brand:#0a5bd3; --brand-soft:#e7f0ff; --pad:#7a3fd1; --pad-soft:#f1e9ff;
+  --cloud:#0a7c86; --cloud-soft:#e2f5f6; --ok:#137a3a; --ok-soft:#e5f6ea;
+  --no:#b42318; --no-soft:#fdecea; --warn:#9a5b00; --warn-soft:#fff4dc;
+  --prem:#8a4b00; --prem-soft:#ffefd2; --na:#6b7684; --na-soft:#eef1f5;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#11151c; --card:#1a2029; --ink:#e7ecf3; --muted:#a3aebd; --line:#2e3744;
+    --brand:#6ea8ff; --brand-soft:#1c2a42; --pad:#b993ff; --pad-soft:#2a2140;
+    --cloud:#5fd0d9; --cloud-soft:#15343a; --ok:#6fd49a; --ok-soft:#163323;
+    --no:#ff8a80; --no-soft:#3a1d1b; --warn:#ffc15e; --warn-soft:#3a2d12;
+    --prem:#ffb357; --prem-soft:#3a2a12; --na:#a3aebd; --na-soft:#252c36;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI","Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.55;font-size:15px}
+.wrap{max-width:1080px;margin-inline:auto;padding-block:32px 48px;padding-inline:24px}
+header.hero{background:linear-gradient(120deg,var(--brand),var(--pad));color:#fff;border-radius:16px;padding:28px 32px;margin-block-end:24px}
+header.hero h1{margin:0 0 6px;font-size:28px;letter-spacing:-0.3px}
+header.hero p{margin:0;opacity:.92}
+.meta{margin-block-start:12px;font-size:13px;opacity:.85}
+.back{margin:0 0 12px;font-size:14px}.back a{color:var(--brand);text-decoration:none}
+h2{font-size:20px;margin-block:36px 12px;padding-inline-start:12px;border-inline-start:5px solid var(--brand)}
+h3{margin:0 0 8px;font-size:17px}
+h4{margin:22px 0 8px;font-size:16px}
+.sub{color:var(--muted);margin-block:-4px 14px;font-size:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+.card.pad{border-block-start:6px solid var(--pad)}
+.card.cloud{border-block-start:6px solid var(--cloud)}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:2px 10px;border-radius:999px;margin-block-end:8px}
+.tag.pad{background:var(--pad-soft);color:var(--pad)}
+.tag.cloud{background:var(--cloud-soft);color:var(--cloud)}
+.analogy{background:var(--bg);border-radius:10px;padding:10px 14px;margin-block:10px;font-size:14px}
+ul.tight{margin:6px 0 0;padding-inline-start:20px}
+ul.tight li{margin-block:3px}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:14px}
+th,td{padding:10px 12px;border-block-end:1px solid var(--line);text-align:start;vertical-align:top}
+thead th{background:var(--brand-soft);color:var(--ink);font-weight:700}
+thead th.c{text-align:center}
+th.pad{background:var(--pad-soft)} th.cloud{background:var(--cloud-soft)}
+tbody th{font-weight:600;width:22%}
+td.c{text-align:center}
+tr:last-child td,tr:last-child th{border-block-end:0}
+.lic{display:block;font-size:12px;font-weight:700;margin-block-start:2px}
+.lic.o{color:var(--ok)} .lic.x{color:var(--no)}
+.ok,.no,.lim,.prem,.na{display:inline-block;font-weight:700;padding:1px 8px;border-radius:6px;font-size:13px;white-space:nowrap}
+.ok{background:var(--ok-soft);color:var(--ok)}
+.no{background:var(--no-soft);color:var(--no)}
+.lim{background:var(--warn-soft);color:var(--warn)}
+.prem{background:var(--prem-soft);color:var(--prem)}
+.na{background:var(--na-soft);color:var(--na)}
+.note{font-size:13px;color:var(--muted);margin-block-start:8px}
+.flow{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap;margin-block:10px 6px}
+.step{flex:1 1 180px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+.step .n{font-size:12px;color:var(--muted);font-weight:600}
+.step b{display:block;margin-block:4px}
+.arrow{align-self:center;font-size:22px;color:var(--muted)}
+.callout{border-radius:12px;padding:16px 18px;margin-block:12px}
+.callout.key{background:var(--prem-soft);border:1px solid var(--prem)}
+.callout.info{background:var(--brand-soft);border:1px solid var(--brand)}
+.callout.warn{background:var(--no-soft);border:1px solid var(--no)}
+.chain{counter-reset:c;list-style:none;padding:0;margin:0}
+.chain li{position:relative;background:var(--card);border:1px solid var(--line);border-radius:12px;padding-block:12px;padding-inline:52px 14px;margin-block:8px}
+.chain li::before{counter-increment:c;content:counter(c);position:absolute;inset-inline-start:14px;inset-block-start:12px;width:26px;height:26px;border-radius:50%;background:var(--brand);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:13px}
+.chain li.final{border:2px solid var(--prem);background:var(--prem-soft)}
+.chain li.final::before{background:var(--prem)}
+.src{font-size:13px;color:var(--muted)}
+.src a{color:var(--brand);word-break:break-all}
+footer{margin-block-start:36px;font-size:12px;color:var(--muted);border-block-start:1px solid var(--line);padding-block-start:12px}
+@media (max-width:760px){.grid2{grid-template-columns:1fr}.arrow{transform:rotate(90deg)}}
+@media print{
+  body{background:#fff;font-size:12px}
+  .wrap{padding:0;max-width:none}
+  header.hero{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  h2{break-after:avoid}
+  .card,.step,table,.callout,.chain li{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<p class="back"><a href="../">← 기술 대시보드</a></p>
+
+<header class="hero">
+  <h1>Power Automate 라이선스 가이드</h1>
+  <p>PAD(Power Automate Desktop)와 Power Automate 클라우드 흐름의 차이, 그리고 Premium 라이선스 유무에 따라 달라지는 점</p>
+  <div class="meta">2026-11-25 기준 Microsoft 공개 문서 정리</div>
+</header>
+
+<h2>1. 두 제품은 무엇이 다른가?</h2>
+<p class="sub">이름은 둘 다 "Power Automate"지만, 일하는 방식과 실행되는 곳이 완전히 다른 두 제품입니다.</p>
+<div class="grid2">
+  <div class="card pad">
+    <span class="tag pad">데스크톱 흐름 · RPA</span>
+    <h3>PAD (Power Automate Desktop)</h3>
+    <div class="analogy">🤖 <b>사람 대신 PC 화면을 조작하는 로봇</b><br>마우스 클릭, 키보드 입력, 화면 읽기를 녹화하고 그대로 반복합니다.</div>
+    <ul class="tight">
+      <li><b>설치:</b> Windows용 앱 (Windows 11에는 기본 포함)</li>
+      <li><b>실행 위치:</b> 사용자의 PC나 서버 (켜져 있어야 함)</li>
+      <li><b>대상:</b> 엑셀, 사내 업무 프로그램, 웹사이트, 파일·폴더</li>
+      <li><b>적합한 경우:</b>
+        <ul class="tight">
+          <li>API로 연동할 수 없는 시스템을 자동화할 때</li>
+          <li>시민 개발자가 UI로 동작하는 프로그램의 자동화를 코딩 없이 쉽게 만들 때</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="card cloud">
+    <span class="tag cloud">클라우드 흐름 · 커넥터/API</span>
+    <h3>Power Automate (웹 기반 클라우드 흐름)</h3>
+    <div class="analogy">🔗 <b>서비스와 서비스를 잇는 연결 통로</b><br>커넥터와 REST API로 클라우드 서비스끼리 데이터를 주고받습니다.</div>
+    <ul class="tight">
+      <li><b>만드는 곳:</b> 웹 브라우저 (make.powerautomate.com)</li>
+      <li><b>실행 위치:</b> Microsoft 클라우드 (PC가 꺼져 있어도 실행)</li>
+      <li><b>대상:</b> Outlook, Teams, SharePoint, 외부 SaaS, REST API</li>
+      <li><b>적합한 경우:</b> 메일 수신, 정해진 시간 같은 이벤트로 시작되는 자동화</li>
+    </ul>
+  </div>
+</div>
+
+<table style="margin-block-start:16px">
+  <thead><tr><th>구분</th><th class="pad">PAD</th><th class="cloud">클라우드 흐름</th></tr></thead>
+  <tbody>
+    <tr><th>자동화 방식</th><td>화면(UI)을 직접 조작</td><td>커넥터·API 호출</td></tr>
+    <tr><th>실행 주체</th><td>로컬 PC나 서버의 PAD 앱</td><td>Microsoft 클라우드 서버</td></tr>
+    <tr><th>시작 방법</th><td>사용자가 직접 실행<br>(PAD 자체에는 예약 기능 없음)</td><td>예약, 이벤트(메일 수신, 파일 생성 등), 수동 버튼</td></tr>
+    <tr><th>둘의 관계</th><td colspan="2">클라우드 흐름이 PAD 흐름을 호출하는 방식으로 함께 사용합니다. 예: <b>클라우드에서 예약 → PC의 PAD가 화면 작업 수행</b></td></tr>
+  </tbody>
+</table>
+
+<h2>2. 라이선스 유무에 따른 차이</h2>
+<p class="sub">라이선스 O = Power Automate Premium 보유 · 라이선스 X = Windows 또는 Microsoft 365에 기본 포함된 권한만 있음</p>
+<table>
+  <thead>
+    <tr>
+      <th>기능</th>
+      <th class="pad c">PAD<span class="lic o">라이선스 O</span></th>
+      <th class="pad c">PAD<span class="lic x">라이선스 X</span></th>
+      <th class="cloud c">클라우드<span class="lic o">라이선스 O</span></th>
+      <th class="cloud c">클라우드<span class="lic x">라이선스 X</span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><th>흐름 만들기·편집</th><td><span class="ok">가능</span></td><td><span class="ok">가능</span><br>녹화기, 디자이너, 400개 이상 작업</td><td><span class="ok">가능</span></td><td><span class="ok">가능</span></td></tr>
+    <tr><th>실행 방식</th><td><span class="ok">수동 + 클라우드 호출</span></td><td><span class="lim">수동만</span><br>내 PC에서 직접 실행</td><td><span class="ok">예약·이벤트·수동</span></td><td><span class="ok">예약·이벤트·수동</span></td></tr>
+    <tr><th>사용 가능한 환경</th><td><span class="ok">모든 환경</span><br>관리형·개발자 환경 포함</td><td><span class="lim">기본 환경만</span></td><td><span class="ok">모든 환경</span><br>관리형 환경 포함</td><td><span class="lim">비관리형 환경만</span></td></tr>
+    <tr><th>커넥터</th><td><span class="ok">표준 + Premium</span></td><td><span class="lim">표준만</span><br>(PAD 안의 클라우드 커넥터)</td><td><span class="ok">표준 + Premium</span><br>HTTP, Dataverse, SQL, 사용자 지정 커넥터</td><td><span class="lim">표준만</span><br>Outlook, Teams, SharePoint 등</td></tr>
+    <tr><th>외부 REST API 호출</th><td><span class="ok">가능</span></td><td>PAD 고유 HTTP 작업으로 가능<br><span class="note">(데이터 정책으로 차단 가능)</span></td><td><span class="ok">가능</span></td><td><span class="no">불가</span><br>HTTP·사용자 지정 커넥터는 Premium</td></tr>
+    <tr><th>PAD 예약·자동 실행</th><td><span class="ok">가능 (유인)</span><br>클라우드 흐름 + 데스크톱 흐름 커넥터</td><td><span class="no">불가</span></td><td><span class="ok">가능 (유인)</span><br>데스크톱 흐름 커넥터 사용</td><td><span class="no">불가</span><br>데스크톱 흐름 커넥터가 Premium</td></tr>
+    <tr><th>무인 실행<br>(로그인 없이 실행)</th><td><span class="prem">Process 추가 필요</span><br>Premium만으로는 불가 (3번 참고)</td><td><span class="no">불가</span></td><td class="c"><span class="na">—</span><br><span class="note">클라우드에서 실행되므로 해당 없음</span></td><td class="c"><span class="na">—</span></td></tr>
+    <tr><th>공유·공동 작업</th><td><span class="ok">가능</span></td><td><span class="no">불가</span></td><td><span class="ok">가능</span></td><td><span class="ok">가능</span></td></tr>
+    <tr><th>중앙 관리·모니터링</th><td><span class="ok">가능</span></td><td><span class="no">불가</span></td><td><span class="ok">가능</span></td><td><span class="ok">가능</span></td></tr>
+  </tbody>
+</table>
+
+<h2>3. Premium · Process · Hosted Process 라이선스 비교</h2>
+<p class="sub">Premium은 <b>사람(사용자)</b>에게, Process와 Hosted Process는 <b>자동화 대상(머신, 클라우드 흐름)</b>에게 할당하는 라이선스입니다.</p>
+<table>
+  <thead>
+    <tr><th>구분</th><th>Power Automate Premium</th><th>Power Automate Process</th><th>Power Automate Hosted Process</th></tr>
+  </thead>
+  <tbody>
+    <tr><th>라이선스 유형</th><td>사용자 라이선스</td><td>용량 라이선스</td><td>용량 라이선스</td></tr>
+    <tr><th>할당 대상</th><td>사용자</td><td>머신(PC·서버·VM) 또는 클라우드 흐름</td><td>Microsoft 호스트 머신·호스트 머신 그룹</td></tr>
+    <tr><th>유인 RPA<br>(로그인 상태에서 실행)</th><td><span class="ok">포함</span><br>유인 봇 1개</td><td><span class="no">미포함</span></td><td><span class="no">미포함</span></td></tr>
+    <tr><th>무인 RPA<br>(로그인 없이 실행)</th><td><span class="no">미포함</span></td><td><span class="ok">포함</span><br>무인 봇 1개 = 동시 실행 1개</td><td><span class="ok">포함</span><br>호스트 봇이 무인 봇 역할도 함</td></tr>
+    <tr><th>호스트 RPA<br>(Microsoft 관리 VM)</th><td><span class="no">미포함</span></td><td><span class="no">미포함</span></td><td><span class="ok">포함</span><br>호스트 봇 1개</td></tr>
+    <tr><th>커넥터</th><td>표준·Premium·사용자 지정</td><td>표준·Premium·사용자 지정</td><td>표준·Premium·사용자 지정</td></tr>
+    <tr><th>일일 작업 한도</th><td>사용자당 40,000</td><td>라이선스당 250,000</td><td>라이선스당 250,000</td></tr>
+    <tr><th>주 용도</th><td>개발자·업무 담당자의 흐름 개발과 유인 실행</td><td>자체 PC·서버에서 무인 실행, 중요 클라우드 흐름에 단독 라이선스 할당</td><td>인프라 없이 Microsoft VM에서 무인 실행</td></tr>
+  </tbody>
+</table>
+<div class="callout info">
+  <b>Process 계열은 Premium을 대체하지 않습니다</b>
+  <ul class="tight">
+    <li>무인 실행용 머신에 Process를 할당하려면, 그 머신을 <b>Premium 사용자가 등록</b>해야 합니다.</li>
+    <li>클라우드 흐름에서 데스크톱 흐름을 실행할 때 사용하는 연결의 소유자에게 <b>Premium</b>이 필요합니다.</li>
+    <li>따라서 무인 실행 구성은 <b>Premium(개발자) + Process 또는 Hosted Process(실행 머신)</b> 조합입니다.</li>
+  </ul>
+</div>
+
+<h4>PAD 실행 방식별 필요 라이선스</h4>
+<table>
+  <thead><tr><th>실행 방식</th><th>실행 위치</th><th>로그인한 사람</th><th>필요 라이선스</th></tr></thead>
+  <tbody>
+    <tr><th>유인 (Attended)</th><td>내 PC (사용자가 로그인해 사용 중)</td><td>필요</td><td><span class="prem">Premium</span></td></tr>
+    <tr><th>무인 (Unattended)</th><td>내 PC, 자체 서버·VM<br><span class="note">봇이 직접 로그인 → 실행 → 로그아웃</span></td><td>불필요</td><td><span class="prem">Premium + Process</span><br><span class="note">동시 실행 수만큼 Process 필요</span></td></tr>
+    <tr><th>호스트 머신 (Hosted RPA)</th><td>Microsoft가 관리하는 VM<br><span class="note">실행용 PC·서버를 직접 준비할 필요 없음</span></td><td>불필요</td><td><span class="prem">Premium + Hosted Process</span></td></tr>
+  </tbody>
+</table>
+<div class="callout warn">
+  <b>⚠️ 자주 하는 오해: "Premium만 있으면 내 PC에서 무인 실행이 된다"</b><br>
+  Premium에는 무인 실행이 포함되지 않습니다. 내 PC라도 무인으로 실행하려면 그 머신에 Process 라이선스를 할당해야 합니다. 다만 <b>90일 체험판</b>에는 무인 실행이 포함되어 있어서, 체험 기간에는 Premium만으로 되는 것처럼 보일 수 있습니다.
+</div>
+
+<h2>4. 핵심 포인트 ① PAD를 예약 실행하려면</h2>
+<p class="sub">PAD에는 자체 예약 기능이 없어서, 클라우드 흐름이 PAD를 호출해야 합니다.</p>
+<div class="flow">
+  <div class="step"><span class="n">STEP 1 · 클라우드 흐름</span><b>⏰ 예약 트리거</b>예: 매일 오전 9시<br><span class="ok">표준</span></div>
+  <div class="arrow">➜</div>
+  <div class="step"><span class="n">STEP 2 · 클라우드 흐름</span><b>🔌 데스크톱 흐름 실행 커넥터</b>"Desktop flows" 커넥터<br><span class="prem">Premium 필요</span></div>
+  <div class="arrow">➜</div>
+  <div class="step"><span class="n">STEP 3 · 등록된 PC·서버</span><b>🤖 PAD 흐름 실행</b>화면 조작 자동화 수행<br><span class="lim">PC 켜짐·연결 상태 필요</span></div>
+</div>
+<div class="callout info">
+  <b>추가 조건</b>
+  <ul class="tight">
+    <li>실행 PC를 Power Automate에 <b>머신으로 등록</b>해야 합니다.</li>
+    <li>Windows <b>Pro, Enterprise, Server</b> 버전만 가능합니다. Home 버전은 라이선스와 관계없이 클라우드에서 실행할 수 없습니다.</li>
+    <li><b>유인 실행</b>(사용자 로그인 상태)은 Premium으로 가능합니다. <b>무인 실행</b>은 Process(자체 머신) 또는 Hosted Process(Microsoft 호스트 머신)가 추가로 필요합니다.</li>
+  </ul>
+</div>
+
+<h2>5. 핵심 포인트 ② 기본 환경을 폐쇄한 조직에서 Premium이 필수인 이유</h2>
+<div class="callout key">
+  <b>📌 전제(예시): 조직이 기본(Default) 환경을 논리적·기능적으로 폐쇄한 경우</b><br>
+  따라서 자동화 개발은 <b>개인 개발자 환경(관리형)</b>에서 진행합니다.
+</div>
+<ol class="chain">
+  <li><b>라이선스 없는 PAD는 기본 환경에서만 쓸 수 있습니다.</b><br>Windows에 포함된 무료 권한으로는 기본 환경에서 개인 생산성 용도로만 데스크톱 흐름을 만들 수 있고, 다른 환경에서는 만들 수 없습니다.</li>
+  <li><b>기본 환경을 폐쇄하면 무료로 쓸 수 있는 경로가 사라집니다.</b><br>PAD와 클라우드 흐름 모두 기본 환경이 아닌 곳에서 개발해야 합니다.</li>
+  <li><b>관리형 환경에서는 모든 사용에 Premium 라이선스가 필요합니다.</b><br>관리형 환경에서 클라우드 흐름을 실행하는 모든 사용자에게 Power Automate Premium 라이선스가 필요합니다. 표준 커넥터만 쓰는 흐름도 마찬가지입니다.</li>
+  <li><b>무료 개발자 플랜으로는 대체할 수 없습니다.</b><br>개발자 플랜에는 관리형 환경에서 리소스를 실행할 권한이 없습니다. 비관리형 개발자 환경은 지원이 종료되며, 기존 개발자 환경은 2026년 12월 15일 전에 관리형으로 전환해야 합니다.</li>
+  <li class="final"><b>결론: 개발자 1인당 Power Automate Premium이 필요합니다.</b><br>PAD 예약 실행이나 REST API 연동까지 고려하면, Premium은 선택 사항이 아니라 <b>개발을 시작하기 위한 전제 조건</b>입니다.</li>
+</ol>
+
+<h2>6. 시나리오별 필요 라이선스 (기본 환경을 폐쇄한 조직 기준)</h2>
+<table>
+  <thead><tr><th>시나리오</th><th>필요 라이선스</th><th>비고</th></tr></thead>
+  <tbody>
+    <tr><th>내 PC에서 PAD 수동 실행 (기본 환경)</th><td><span class="ok">무료</span></td><td>기본 환경을 폐쇄했다면 <b>해당 없음</b></td></tr>
+    <tr><th>개인 개발자 환경(관리형)에서 PAD·클라우드 흐름 개발</th><td><span class="prem">Power Automate Premium</span></td><td>표준 커넥터만 써도 필요</td></tr>
+    <tr><th>PAD 예약 실행 (유인, 사용자 로그인 상태)</th><td><span class="prem">Power Automate Premium</span></td><td>데스크톱 흐름 커넥터 사용, 머신 등록</td></tr>
+    <tr><th>PAD 무인 실행 (내 PC·자체 서버·VM)</th><td><span class="prem">Premium + Process</span></td><td>Process는 머신에 할당, 1개당 동시 실행 1개</td></tr>
+    <tr><th>PAD 무인 실행 (Microsoft 호스트 머신)</th><td><span class="prem">Premium + Hosted Process</span></td><td>실행용 PC·서버 준비 불필요</td></tr>
+    <tr><th>클라우드 흐름에서 외부 REST API 연동</th><td><span class="prem">Power Automate Premium</span></td><td>HTTP·사용자 지정 커넥터</td></tr>
+    <tr><th>운영 환경(관리형)에서 흐름을 실행하는 최종 사용자</th><td><span class="prem">Premium (사용자별)</span></td><td>또는 해당 클라우드 흐름에 Process 할당</td></tr>
+  </tbody>
+</table>
+
+<h2>참고 자료 (Microsoft Learn)</h2>
+<ul class="tight src">
+  <li>Power Automate 라이선스 유형 (Premium · Process · Hosted Process) – <a href="https://learn.microsoft.com/en-us/power-platform/admin/power-automate-licensing/types">learn.microsoft.com/…/power-automate-licensing/types</a></li>
+  <li>회사·학교 계정으로 PAD 시작하기 – <a href="https://learn.microsoft.com/en-us/power-automate/desktop-flows/getting-started-freeorg">learn.microsoft.com/…/getting-started-freeorg</a></li>
+  <li>PAD의 클라우드 커넥터 – <a href="https://learn.microsoft.com/en-us/power-automate/desktop-flows/actions-reference/cloudconnectors">learn.microsoft.com/…/cloudconnectors</a></li>
+  <li>관리형 환경 라이선스 요구 사항 – <a href="https://learn.microsoft.com/en-us/power-platform/admin/managed-environment-licensing">learn.microsoft.com/…/managed-environment-licensing</a></li>
+  <li>관리형 환경 개요 (개발자 환경 정책 포함) – <a href="https://learn.microsoft.com/en-us/power-platform/admin/managed-environment-overview">learn.microsoft.com/…/managed-environment-overview</a></li>
+</ul>
+
+<footer>
+  본 자료는 2026-11-25 기준 Microsoft 공개 문서를 바탕으로 정리했습니다. 라이선스 정책과 가격은 Microsoft 사정에 따라 바뀔 수 있으므로, 구매 전에 Microsoft 또는 라이선스 파트너에게 최종 확인하시기 바랍니다.
+</footer>
+</div>
+</body>
+</html>
