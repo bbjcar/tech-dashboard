@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark">
+<title>Windows Hybrid Intelligence — 10월 7일 Windows 발표 정리</title>
+<style>
+:root{--bg:#ffffff;--fg:#14213d;--muted:#5b6475;--accent:#1f4e9c;--line:#e3e7ef;--card:#f6f8fc;--code:#eef2f9;--star:#d99a00;--warn-bg:#fff6e5;--warn-line:#f0b44c}
+@media (prefers-color-scheme: dark){:root{--bg:#0e1525;--fg:#e8ecf4;--muted:#a3acbd;--accent:#7fb0ff;--line:#263149;--card:#151f33;--code:#1a2540;--star:#ffcb4d;--warn-bg:#33270f;--warn-line:#b7852f}}
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font-family:"Pretendard","Segoe UI","Malgun Gothic",-apple-system,sans-serif;line-height:1.6;text-align:start}
+.page{max-width:68rem;margin-inline:auto;padding-block:2rem;padding-inline:1.25rem}
+h1{font-size:1.9rem;margin-block:0 .25rem;line-height:1.25}
+h2{font-size:1.3rem;margin-block:2.25rem .75rem;padding-block-end:.35rem;border-block-end:2px solid var(--accent)}
+h3{font-size:1.05rem;margin-block:1.5rem .5rem;color:var(--accent)}
+.muted{color:var(--muted)}a{color:var(--accent)}
+.summary{background:var(--card);border-inline-start:4px solid var(--accent);padding:.9rem 1.1rem;border-radius:.5rem;font-size:1.02rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(12.5rem,1fr));gap:.8rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:.75rem;padding:.9rem 1rem}
+.card h4{margin:0 0 .2rem;font-size:1.05rem}
+.card p{margin:.2rem 0 0;font-size:.9rem;color:var(--muted)}
+.star{color:var(--star);font-size:.85rem;letter-spacing:.05em}
+pre{background:var(--code);border-radius:.5rem;padding:.6rem .8rem;margin:.3rem 0;font-size:.85rem;line-height:1.45;overflow-x:auto;font-family:Consolas,"D2Coding",monospace;white-space:pre}
+.diag{display:grid;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));gap:.8rem}
+.diag .card h4{font-size:.95rem;color:var(--accent)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{text-align:start;vertical-align:top;padding:.5rem .65rem;border-block-end:1px solid var(--line)}
+th{color:var(--muted);font-weight:600;background:var(--card)}
+td.nm{width:12rem;font-weight:600}td.no{width:2.5rem;color:var(--muted)}
+td pre{margin:.1rem 0}
+ul.tight{margin:.3rem 0;padding-inline-start:1.2rem}
+.qa{border:1px solid var(--line);border-radius:.75rem;padding:.9rem 1.1rem;margin-block:.8rem;background:var(--card)}
+.qa .q{font-weight:700}
+.note{background:var(--warn-bg);border-inline-start:4px solid var(--warn-line);padding:.75rem 1rem;border-radius:.5rem;font-size:.92rem}
+ol.src{font-size:.88rem;padding-inline-start:1.3rem}
+footer{margin-block-start:2rem;font-size:.85rem;color:var(--muted);border-block-start:1px solid var(--line);padding-block-start:.75rem}
+@media print{:root{--bg:#fff;--fg:#000;--muted:#444;--card:#fff;--line:#999;--code:#f3f3f3}.card,tr,.qa{break-inside:avoid}@page{margin:15mm}}
+
+.toc{background:var(--card);border:1px solid var(--line);border-radius:.75rem;padding:.9rem 1.2rem;margin-block:1.2rem .5rem}
+.toc strong{display:block;margin-block-end:.4rem}
+.toc ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.2rem 1.5rem}
+.toc a{display:flex;gap:.6rem;align-items:center;text-decoration:none;color:var(--fg);padding:.3rem .4rem;border-radius:.4rem}
+.toc a:hover{background:var(--code);color:var(--accent)}
+.toc-n{flex:none;display:inline-grid;place-items:center;inline-size:1.5rem;block-size:1.5rem;border-radius:50%;background:var(--code);color:var(--accent);font-size:.75rem;font-weight:700}
+html{scroll-behavior:smooth}h2[id]{scroll-margin-block-start:1rem}
+.pill{display:inline-block;border-radius:999px;padding:0 .55rem;font-size:.78rem;font-weight:700;margin-inline-end:.25rem;white-space:nowrap}
+.ga{background:#e5f6ea;color:#137a3a}.pv{background:#fff1d6;color:#8a5a00}.up{background:#e7f0ff;color:#0a5bd3}
+@media (prefers-color-scheme: dark){.ga{background:#163a24;color:#8ee3a8}.pv{background:#3a2c10;color:#ffd27a}.up{background:#17284a;color:#9cc2ff}}
+.pillars{display:grid;grid-template-columns:repeat(auto-fill,minmax(14rem,1fr));gap:.8rem}
+.pillars .card h4{color:var(--accent)}
+.ts a{font-family:Consolas,monospace;font-size:.85rem;white-space:nowrap}
+@media (max-width:760px){.toc ol{grid-template-columns:1fr}}
+@media print{.toc{display:none}}
+</style></head><body><main class="page">
+<p class="muted"><a href="../">← 기술 대시보드</a> · 발표 2026-10-07 · 정리 2026-11-26</p>
+<h1>Windows Hybrid Intelligence — Cloud + Local AI</h1>
+<p class="muted">“Something new is coming from Windows | October 7” 발표와 Microsoft·NVIDIA 공식 블로그를 기준으로 정리했습니다. 상태 표시: <span class="pill ga">GA</span> 정식 출시 · <span class="pill pv">프리뷰</span> 실험·미리 보기 · <span class="pill up">예정</span> 출시 예정</p>
+<nav class="toc" aria-label="목차"><strong>목차</strong><ol><li><a href="#s1"><span class="toc-n">1</span>한 문장 요약 · 3가지 축</a></li><li><a href="#s2"><span class="toc-n">2</span>발표 흐름 (영상 타임라인)</a></li><li><a href="#s3"><span class="toc-n">3</span>보안: MXC 정식 출시</a></li><li><a href="#s4"><span class="toc-n">4</span>로컬 모델 · 라우팅 · Windows ML</a></li><li><a href="#s5"><span class="toc-n">5</span>Copilot on Windows</a></li><li><a href="#s6"><span class="toc-n">6</span>작업 표시줄 검색 · 에이전트 시작 환경</a></li><li><a href="#s7"><span class="toc-n">7</span>디바이스 라인업</a></li><li><a href="#s8"><span class="toc-n">8</span>실무 포인트 · 교육 Q&amp;A</a></li><li><a href="#ref"><span class="toc-n">📎</span>참고 자료</a></li></ol></nav>
+
+<h2 id="s1">1. 한 문장 요약 · 3가지 축</h2>
+<p class="summary">Windows를 <b>에이전트가 로컬에서 돌 수 있으면 로컬에서, 필요하면 클라우드로</b> 가는 “하이브리드 인텔리전스” 플랫폼으로 만들고, 그 전제 조건인 <b>에이전트 보안(MXC)</b>과 <b>로컬 AI를 돌릴 하드웨어(RTX Spark)</b>를 함께 내놓은 발표입니다.</p>
+<div class="pillars" style="margin-block-start:.8rem">
+<div class="card"><h4>① 에이전트 보안</h4><p>격리(Containment) · 에이전트 ID(Identity) · 관리(Manageability). MXC 정식 출시, Agent 365·Intune과 연동</p></div>
+<div class="card"><h4>② 하이브리드 인텔리전스</h4><p>로컬 모델 + 지능형 라우팅 + 런타임(Windows ML). 작업마다 로컬/클라우드를 골라 토큰 비용 절감</p></div>
+<div class="card"><h4>③ 새 PC 라인업</h4><p>Copilot+ PC → RTX Spark 기반 Builder PC → DGX Station for Windows까지</p></div>
+</div>
+
+<h2 id="s2">2. 발표 흐름 (영상 타임라인)</h2>
+<table><thead><tr><th>시점</th><th>세션</th><th>핵심</th></tr></thead><tbody>
+<tr><td class="ts"><a href="https://www.youtube.com/watch?v=ilmBGeGldrI&amp;t=1171">19:31</a></td><td class="nm">오프닝 (Satya Nadella)</td><td>PC·분산 컴퓨팅의 역사에서 에이전트 시대로. 신뢰·인텔리전스·폼팩터를 축으로 Agent 365, Microsoft IQ, Copilot 소개</td></tr>
+<tr><td class="ts"><a href="https://www.youtube.com/watch?v=ilmBGeGldrI&amp;t=1486">24:46</a></td><td class="nm">에이전트용 OS 기본 기능 (Pavan Davuluri)</td><td>MXC 정식 출시, 에이전트별 ID, 권한 분리, Defender·Agent 365 기반 관찰·정책 거버넌스 시연</td></tr>
+<tr><td class="ts"><a href="https://www.youtube.com/watch?v=ilmBGeGldrI&amp;t=1885">31:25</a></td><td class="nm">하이브리드 인텔리전스</td><td>로컬·클라우드 지능형 라우팅, MAI Code 1.1 Flash 로컬 실행, Nemotron·DeepSeek V4 Flash, Windows ML에 llama.cpp</td></tr>
+<tr><td class="ts"><a href="https://www.youtube.com/watch?v=ilmBGeGldrI&amp;t=2144">35:44</a></td><td class="nm">GitHub 시연</td><td>HydraFusion이 간단한 작업·이슈 분류는 로컬 모델로 보내 토큰 비용 절감</td></tr>
+<tr><td class="ts"><a href="https://www.youtube.com/watch?v=ilmBGeGldrI&amp;t=2400">40:00</a></td><td class="nm">작업 표시줄 검색 · Copilot</td><td>검색창에서 바로 실행하는 작업, 인라인 Copilot. Copilot Home·Code·Autopilot의 로컬 기능 시연(세금 서류 정리 → 답장 초안)</td></tr>
+<tr><td class="ts"><a href="https://www.youtube.com/watch?v=ilmBGeGldrI&amp;t=2825">47:05</a></td><td class="nm">에이전트 생태계</td><td>OpenClaw·Hermes·Perplexity 등 로컬 에이전트, OpenClaw용 Windows 네이티브 게이트웨이, 간편 설정</td></tr>
+<tr><td class="ts"><a href="https://www.youtube.com/watch?v=ilmBGeGldrI&amp;t=3020">50:20</a></td><td class="nm">디바이스</td><td>Surface Laptop Ultra · Surface RTX Spark Dev Box → 파트너 RTX Spark 노트북(<a href="https://www.youtube.com/watch?v=ilmBGeGldrI&amp;t=3630">1:00:30</a>) → DGX Station for Windows(<a href="https://www.youtube.com/watch?v=ilmBGeGldrI&amp;t=3691">1:01:31</a>)</td></tr>
+<tr><td class="ts"><a href="https://www.youtube.com/watch?v=ilmBGeGldrI&amp;t=3832">1:03:52</a></td><td class="nm">대담</td><td>Satya Nadella × Jensen Huang, 진행 Sriram Krishnan. Windows·DirectX·GeForce에서 이어진 협력의 역사, 에이전트 위임과 신뢰·거버넌스</td></tr>
+</tbody></table>
+<p class="muted" style="font-size:.85rem">시점은 영상 기준 대략적인 위치입니다.</p>
+
+<h2 id="s3">3. 보안: Microsoft Execution Containers(MXC) <span class="pill ga">GA</span></h2>
+<table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody>
+<tr><td class="nm">왜 필요한가</td><td>에이전트는 일반 앱과 달리 24시간 돌면서 도구를 쓰고, 코드를 쓰고, 파일에 접근합니다. 프롬프트와 도구 호출마다 필요한 격리 수준이 달라서 기존 샌드박스로는 부족하다는 것이 Microsoft의 설명입니다.</td></tr>
+<tr><td class="nm">3가지 기본 기능</td><td><ul class="tight"><li><b>Containment</b>: 에이전트가 접근할 수 있는 파일·네트워크를 정책으로 정하고 실행 중에 강제</li><li><b>Identity</b>: 어떤 에이전트가 한 일인지 사용자 활동과 구분</li><li><b>Manageability</b>: Agent 365, Intune으로 정책 설정·위험 모니터링 (대규모 거버넌스에는 추가 서비스가 필요할 수 있음)</li></ul></td></tr>
+<tr><td class="nm">격리 단계</td><td>프로세스 격리 → 세션 격리 → WSLc → 가상 머신 → <b>Windows 365 for Agents</b>. MXC 자체는 다른 OS에서도 동작하지만 Windows에서 선택지가 가장 많습니다.</td></tr>
+<tr><td class="nm">지원 에이전트</td><td><b>지원 중:</b> OpenAI Codex, GitHub Copilot, OpenClaw, Replit, LM Studio, NVIDIA OpenShell, Unsloth AI<br><b>지원 예정:</b> Claude Code, Box, Egnyte, Hermes Agent, Manus, Perplexity, Raycast 등. Meta의 Muse도 MXC를 통합한 Windows 네이티브 앱으로 출시 예정</td></tr>
+</tbody></table>
+
+<h2 id="s4">4. 로컬 모델 · 라우팅 · Windows ML</h2>
+<table><thead><tr><th>구분</th><th>내용</th><th>상태</th></tr></thead><tbody>
+<tr><td class="nm">MAI Code 1.1 Flash (로컬판)</td><td>Microsoft의 코딩 모델. 전체 137B·활성 6.8B 파라미터(MoE). 약 3비트(혼합 정밀도 평균 약 3.3비트)로 양자화해 크기를 약 80% 줄인 <b>53GB</b>, 256K 컨텍스트 지원(256K에서 최대 메모리 약 75.5GB). SWE-Bench Verified는 클라우드 72.6%, 로컬 70.8%(Microsoft 측정)</td><td><span class="pill pv">실험 배포</span></td></tr>
+<tr><td class="nm">NVIDIA Nemotron (예정 모델)</td><td>70B 이상 모델을 2비트로 양자화해 약 20GB 메모리로 실행</td><td><span class="pill up">예정</span></td></tr>
+<tr><td class="nm">DeepSeek V4 Flash</td><td>284B 파라미터 모델을 RTX Spark에서 로컬 실행. 보도 기준 메모리 60GB 이상 장비에서 동작</td><td><span class="pill up">예정</span></td></tr>
+<tr><td class="nm">GitHub HydraFusion</td><td>작업마다 알맞은 모델로 보내는 GitHub의 라우팅. Windows에서는 <b>로컬 모델까지</b> 후보로 사용. GitHub Copilot 앱·CLI·VS Code에 실험 프리뷰. 자동 라우팅 말고 로컬 모델을 직접 고를 수도 있음</td><td><span class="pill pv">프리뷰</span></td></tr>
+<tr><td class="nm">Windows ML + llama.cpp</td><td>Windows ML(GPU·NPU·CPU 공통 로컬 추론 런타임)에 llama.cpp 통합 → <b>GGUF 모델</b>을 그대로 실행. Text Generation API가 ONNX·GGUF를 함께 받고, <b>OpenAI 호환 엔드포인트</b>도 제공해 기존 OpenAI SDK로 시험 가능</td><td><span class="pill pv">실험</span></td></tr>
+</tbody></table>
+<p class="note"><b>포인트:</b> 로컬 실행의 장점은 <b>지연 시간 감소 · 데이터가 기기에 머묾 · 토큰당 클라우드 비용 없음</b>입니다. 단, 큰 모델은 메모리가 관건입니다. MAI Code 1.1 Flash를 256K 컨텍스트로 쓰려면 사실상 128GB 메모리 구성이 필요합니다.</p>
+
+<h2 id="s5">5. Copilot on Windows — 로컬 컨텍스트 · 로컬 작업 · 로컬 모델 <span class="pill up">예정</span></h2>
+<table><thead><tr><th>기능</th><th>내용</th></tr></thead><tbody>
+<tr><td class="nm">로컬 컨텍스트</td><td>사용자 허락을 받아 PC의 파일·최근 활동을 이해</td></tr>
+<tr><td class="nm">로컬 작업</td><td>파일 정리, 기기 진단, 문제 해결, 코딩 등 Windows에서 직접 실행</td></tr>
+<tr><td class="nm">로컬 모델</td><td>적합한 작업은 PC 모델로, 어려운 작업은 클라우드로. 비용·개인정보가 중요할 때 로컬로 넘김</td></tr>
+<tr><td class="nm">Home · Code · Autopilot</td><td><b>Home</b>: 최근 작업 파일로 협업용 결과물 생성 · <b>Code</b>: 프롬프트 하나로 Windows 네이티브 앱 생성, MXC로 안전하게 실행 · <b>Autopilot</b>: 계속 일하는 개인 에이전트에 로컬 컨텍스트·작업 결합</td></tr>
+<tr><td class="nm">시연</td><td>이메일 확인 → 여러 위치의 세금 문서 찾기 → 이름 변경·폴더 정리 → ZIP 압축 → 답장 초안. 문서 분류는 로컬 모델이 처리해 세부 정보를 클라우드로 보내지 않음</td></tr>
+<tr><td class="nm">출시 조건</td><td><b>Copilot+ PC</b>에서 앞으로 몇 달에 걸쳐 순차 제공. 기기·시장·칩에 따라 다름</td></tr>
+</tbody></table>
+
+<h2 id="s6">6. 작업 표시줄 검색 · 에이전트 시작 환경</h2>
+<table><thead><tr><th>기능</th><th>내용</th><th>상태</th></tr></thead><tbody>
+<tr><td class="nm">검색에서 바로 실행</td><td>“다크 모드로 전환”, “방해 금지 켜기”, “창 정렬”, “화면 어둡게”, 연결된 휴대폰으로 문자 보내기 등 수천 가지 작업</td><td><span class="pill pv">Insider</span></td></tr>
+<tr><td class="nm">검색 + Copilot</td><td>검색창에서 짧은 답을 바로 보고, 필요하면 Copilot 앱으로 이어서 대화. 사용자가 선택해서 켜는 방식(opt-in)</td><td><span class="pill up">연내 일부 시장</span></td></tr>
+<tr><td class="nm">에이전트 간편 설정</td><td>미니 데스크톱 PC에서 인기 에이전트를 몇 번의 클릭으로 설정. OpenClaw용 Windows 네이티브 게이트웨이 + MXC 샌드박스. Hermes, Perplexity 등도 로컬 실행</td><td><span class="pill up">예정</span></td></tr>
+</tbody></table>
+
+<h2 id="s7">7. 디바이스 라인업</h2>
+<table><thead><tr><th>등급</th><th>제품</th><th>특징</th></tr></thead><tbody>
+<tr><td class="nm">Copilot+ PC</td><td>Acer, ASUS, Dell, HP, Lenovo, Surface</td><td>일상 업무용. 하이브리드 인텔리전스 Copilot 기능이 여기서 먼저 제공</td></tr>
+<tr><td class="nm">Builder PC (RTX Spark)</td><td>Surface Laptop Ultra, ASUS ProArt P16/P14, Dell XPS 16 Creator Edition, HP OmniBook Ultra 16, Lenovo Yoga 9n, MSI Prestige N16 Flip AI+</td><td>NVIDIA RTX Spark(Blackwell GPU + Grace CPU). 최대 128GB 통합 메모리, 최대 1페타플롭(FP4) AI 연산, 120B 이상 모델 로컬 실행. 10월 16일부터 출고. Surface Laptop Ultra는 일반 USB-C 포트를 쓰는 자석식 충전 지원</td></tr>
+<tr><td class="nm">Dev Box · 미니 데스크톱</td><td>Surface RTX Spark Dev Box 외</td><td>24시간 켜 두는 로컬 AI·에이전트용. Surface Dev Box는 11월 미국 출고</td></tr>
+<tr><td class="nm">DGX Station for Windows</td><td>Dell Pro Precision with GB300, HP ZGX Fury AI Station 등</td><td>GB300 슈퍼칩, 최대 748GB 메모리·20페타플롭(FP4), 1조 파라미터급 모델. 팀용 “토큰 공장”으로 32개 이상 에이전트 동시 실행. 연내 출시</td></tr>
+</tbody></table>
+
+<h2 id="s8">8. 실무 포인트 · 교육 Q&amp;A</h2>
+<table><thead><tr><th>관점</th><th>정리</th></tr></thead><tbody>
+<tr><td class="nm">거버넌스</td><td>PC 에이전트 관리는 <b>MXC(격리) + Entra 에이전트 ID + Agent 365·Intune(정책·관찰)</b> 조합으로 설명하면 됩니다.</td></tr>
+<tr><td class="nm">비용</td><td>로컬 모델은 토큰 비용이 없는 대신 하드웨어 비용이 듭니다. 클라우드 격리 단계인 Windows 365 for Agents는 Ignite 2026에서 Copilot Credits 과금 대상으로 발표됐습니다.</td></tr>
+<tr><td class="nm">도입 조건</td><td>Copilot 로컬 기능은 Copilot+ PC 대상이고, 큰 로컬 모델은 RTX Spark급 메모리가 필요합니다. 기존 PC로 바로 되는 기능이 아님을 먼저 안내하세요.</td></tr>
+</tbody></table>
+<div class="qa"><p class="q">Q. Autopilot은 클라우드 영역만 담당해서 로컬 PC에서는 에이전트를 쓸 수 없다. 로컬 PC 쪽은 어떤 서비스가 맡나?</p><p><b>A.</b> Windows의 <b>Hybrid Intelligence (Cloud + Local AI)</b>가 그 역할을 맡습니다. 발표 기준으로 Autopilot에도 로컬 컨텍스트·로컬 작업·로컬 모델이 결합될 예정이라, “클라우드 에이전트 + PC 쪽 실행 능력”으로 이어지는 구조입니다. 기술적 핵심은 <b>OS 수준 격리(MXC)</b>와 <b>로컬 AI</b>입니다.</p></div>
+<p class="note"><b>Ignite 2026 후속:</b> MXC에 새 격리 기능이 추가됐고, Windows 365 for Agents가 Copilot Credits 과금 대상이 됐습니다. 자세한 내용은 <a href="../ignite-2026/">Ignite 2026 결과 정리</a>를 참고하세요. Azure Landing Zone 용어 정리는 <a href="https://bbjcar.github.io/tech-notes/concepts/azure-landing-zone-basics/">기술노트</a>로 옮겼습니다.</p>
+
+<h2 id="ref">참고 자료</h2>
+<ol class="src">
+<li><a href="https://www.youtube.com/watch?v=ilmBGeGldrI">Something new is coming from Windows | October 7 (발표 영상)</a></li>
+<li><a href="https://blogs.windows.com/windowsexperience/2026/10/07/building-windows-for-hybrid-intelligence/">Building Windows for hybrid intelligence — Windows Experience Blog</a></li>
+<li><a href="https://blogs.windows.com/windowsdeveloper/2026/10/07/microsoft-execution-containers-policy-driven-containment-for-ai-agents/">Microsoft Execution Containers: Policy-driven containment for AI agents — Windows Developer Blog</a></li>
+<li><a href="https://devblogs.microsoft.com/foundry-on-windows/build-on-winml-oct-7-26/">AI Development on Windows: from PyTorch and llama.cpp to Windows ML — Microsoft Foundry on Windows Blog</a></li>
+<li><a href="https://ai.azure.com/catalog/models/MAI-Code-1.1-Flash-On-Device">MAI-Code-1.1-Flash-On-Device — Microsoft Foundry 모델 카탈로그</a></li>
+<li><a href="https://blogs.nvidia.com/blog/local-ai-rtx-spark-microsoft-windows-event/">NVIDIA, Microsoft Kick Off a New Beginning for Windows PCs with RTX Spark and AI Agents — NVIDIA Blog</a></li>
+<li><a href="https://github.com/microsoft/mxc/tree/main">microsoft/mxc: Policy-driven, layered isolation and containment (GitHub)</a></li>
+<li><a href="https://www.reuters.com/business/microsoft-nvidia-ceos-unveil-new-ai-laptop-san-francisco-event-2026-10-07/">Microsoft brings more AI to PCs as it challenges Apple — Reuters</a></li>
+<li><a href="https://www.geekwire.com/2026/microsoft-plays-the-windows-card-in-the-ai-game-with-help-from-nvidia/">Microsoft plays the Windows card in the AI game with help from NVIDIA — GeekWire</a></li>
+</ol>
+<footer>공개 발표 영상과 공식 블로그를 기준으로 정리한 개인 학습 페이지입니다.</footer>
+</main></body></html>
