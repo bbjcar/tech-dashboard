@@ -78,6 +78,16 @@ tr:last-child td,tr:last-child th{border-block-end:0}
 .src{font-size:13px;color:var(--muted)}
 .src a{color:var(--brand);word-break:break-all}
 footer{margin-block-start:36px;font-size:12px;color:var(--muted);border-block-start:1px solid var(--line);padding-block-start:12px}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 22px;margin-block:20px 8px}
+.toc strong{display:block;font-size:15px;margin-block-end:8px}
+.toc ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 24px}
+.toc a{display:flex;gap:10px;align-items:center;color:var(--ink);text-decoration:none;padding:6px 8px;border-radius:8px}
+.toc a:hover{background:var(--brand-soft);color:var(--brand)}
+.toc-n{flex:none;display:inline-grid;place-items:center;inline-size:24px;block-size:24px;border-radius:50%;background:var(--brand-soft);color:var(--brand);font-size:12px;font-weight:700}
+html{scroll-behavior:smooth}
+h2[id]{scroll-margin-block-start:16px}
+@media (max-width:760px){.toc ol{grid-template-columns:1fr}}
+@media print{.toc{display:none}}
 @media (max-width:760px){.grid2{grid-template-columns:1fr}.arrow{transform:rotate(90deg)}}
 @media print{
   body{background:#fff;font-size:12px}
@@ -98,7 +108,20 @@ footer{margin-block-start:36px;font-size:12px;color:var(--muted);border-block-st
   <div class="meta">2026-11-25 기준 Microsoft 공개 문서 정리</div>
 </header>
 
-<h2>1. 두 제품은 무엇이 다른가?</h2>
+<nav class="toc" aria-label="목차">
+  <strong>목차</strong>
+  <ol>
+    <li><a href="#s1"><span class="toc-n">1</span>두 제품은 무엇이 다른가?</a></li>
+    <li><a href="#s2"><span class="toc-n">2</span>라이선스 유무에 따른 차이</a></li>
+    <li><a href="#s3"><span class="toc-n">3</span>Premium · Process · Hosted Process 비교</a></li>
+    <li><a href="#s4"><span class="toc-n">4</span>핵심 포인트 ① PAD를 예약 실행하려면</a></li>
+    <li><a href="#s5"><span class="toc-n">5</span>핵심 포인트 ② 기본 환경 폐쇄 시 Premium이 필수인 이유</a></li>
+    <li><a href="#s6"><span class="toc-n">6</span>시나리오별 필요 라이선스</a></li>
+    <li><a href="#ref"><span class="toc-n">📎</span>참고 자료</a></li>
+  </ol>
+</nav>
+
+<h2 id="s1">1. 두 제품은 무엇이 다른가?</h2>
 <p class="sub">이름은 둘 다 "Power Automate"지만, 일하는 방식과 실행되는 곳이 완전히 다른 두 제품입니다.</p>
 <div class="grid2">
   <div class="card pad">
@@ -140,7 +163,7 @@ footer{margin-block-start:36px;font-size:12px;color:var(--muted);border-block-st
   </tbody>
 </table>
 
-<h2>2. 라이선스 유무에 따른 차이</h2>
+<h2 id="s2">2. 라이선스 유무에 따른 차이</h2>
 <p class="sub">라이선스 O = Power Automate Premium 보유 · 라이선스 X = Windows 또는 Microsoft 365에 기본 포함된 권한만 있음</p>
 <table>
   <thead>
@@ -165,7 +188,7 @@ footer{margin-block-start:36px;font-size:12px;color:var(--muted);border-block-st
   </tbody>
 </table>
 
-<h2>3. Premium · Process · Hosted Process 라이선스 비교</h2>
+<h2 id="s3">3. Premium · Process · Hosted Process 라이선스 비교</h2>
 <p class="sub">Premium은 <b>사람(사용자)</b>에게, Process와 Hosted Process는 <b>자동화 대상(머신, 클라우드 흐름)</b>에게 할당하는 라이선스입니다.</p>
 <table>
   <thead>
@@ -205,7 +228,7 @@ footer{margin-block-start:36px;font-size:12px;color:var(--muted);border-block-st
   Premium에는 무인 실행이 포함되지 않습니다. 내 PC라도 무인으로 실행하려면 그 머신에 Process 라이선스를 할당해야 합니다. 다만 <b>90일 체험판</b>에는 무인 실행이 포함되어 있어서, 체험 기간에는 Premium만으로 되는 것처럼 보일 수 있습니다.
 </div>
 
-<h2>4. 핵심 포인트 ① PAD를 예약 실행하려면</h2>
+<h2 id="s4">4. 핵심 포인트 ① PAD를 예약 실행하려면</h2>
 <p class="sub">PAD에는 자체 예약 기능이 없어서, 클라우드 흐름이 PAD를 호출해야 합니다.</p>
 <div class="flow">
   <div class="step"><span class="n">STEP 1 · 클라우드 흐름</span><b>⏰ 예약 트리거</b>예: 매일 오전 9시<br><span class="ok">표준</span></div>
@@ -223,7 +246,7 @@ footer{margin-block-start:36px;font-size:12px;color:var(--muted);border-block-st
   </ul>
 </div>
 
-<h2>5. 핵심 포인트 ② 기본 환경을 폐쇄한 조직에서 Premium이 필수인 이유</h2>
+<h2 id="s5">5. 핵심 포인트 ② 기본 환경을 폐쇄한 조직에서 Premium이 필수인 이유</h2>
 <div class="callout key">
   <b>📌 전제(예시): 조직이 기본(Default) 환경을 논리적·기능적으로 폐쇄한 경우</b><br>
   따라서 자동화 개발은 <b>개인 개발자 환경(관리형)</b>에서 진행합니다.
@@ -236,7 +259,7 @@ footer{margin-block-start:36px;font-size:12px;color:var(--muted);border-block-st
   <li class="final"><b>결론: 개발자 1인당 Power Automate Premium이 필요합니다.</b><br>PAD 예약 실행이나 REST API 연동까지 고려하면, Premium은 선택 사항이 아니라 <b>개발을 시작하기 위한 전제 조건</b>입니다.</li>
 </ol>
 
-<h2>6. 시나리오별 필요 라이선스 (기본 환경을 폐쇄한 조직 기준)</h2>
+<h2 id="s6">6. 시나리오별 필요 라이선스 (기본 환경을 폐쇄한 조직 기준)</h2>
 <table>
   <thead><tr><th>시나리오</th><th>필요 라이선스</th><th>비고</th></tr></thead>
   <tbody>
@@ -250,7 +273,7 @@ footer{margin-block-start:36px;font-size:12px;color:var(--muted);border-block-st
   </tbody>
 </table>
 
-<h2>참고 자료 (Microsoft Learn)</h2>
+<h2 id="ref">참고 자료 (Microsoft Learn)</h2>
 <ul class="tight src">
   <li>Power Automate 라이선스 유형 (Premium · Process · Hosted Process) – <a href="https://learn.microsoft.com/en-us/power-platform/admin/power-automate-licensing/types">learn.microsoft.com/…/power-automate-licensing/types</a></li>
   <li>회사·학교 계정으로 PAD 시작하기 – <a href="https://learn.microsoft.com/en-us/power-automate/desktop-flows/getting-started-freeorg">learn.microsoft.com/…/getting-started-freeorg</a></li>
